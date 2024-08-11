@@ -3,6 +3,9 @@ import bcrypt from "bcryptjs";
 import moveimage from "../helper/moveimage.js"
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken"
+import path from "path";
+import { fileURLToPath } from "url";
+import fs from "fs";
 const userService = {};
 userService.Register = async (request) => {
     const checkingEmail = await userModel.findOne({ email: request.body.email });
@@ -34,6 +37,38 @@ userService.verifyPassword=async(request)=>{
     const data=jwt.sign(userData.toObject(),"sumitrawat")
     userData.tokken=data;
     return {message:"Password is correct", data:userData}
+}
+userService.getUserData=async(request)=>{
+    const data=request.UserData;
+    return {message:"User Data",status:true,Data:data}
+    
+}
+userService.searchingUser=async(request)=>{
+    const UserName=request.query.search;
+    const regex=new RegExp(UserName,"i")
+    const data=await userModel.find({name:regex,status:"active"},{password:0,status:0,is_deleted:0})
+    return {message:"listing of all user",status:true,data:data}
+
+}
+userService.updateUserProfile=async(request)=>{
+    const userData=await userModel.findOne({_id:new mongoose.Types.ObjectId(request.query.userId),status:"active"})
+    if(!userData)
+    {
+        return{ message:"user not exist", status:false}
+
+    }
+    if(request.body.profile_pic &&  request.body.profile_pic!=userData.profile_pic){
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = path.dirname(__filename);
+        const uploadfilePath = path.join(__dirname, "../../public/images/" + userData.profile_pic);
+        if(fs.existsSync(uploadfilePath)) {
+            await fs.unlinkSync(uploadfilePath);
+        }
+        await moveimage.moveFileFromFolder(request.body.profile_pic,"images")
+    }
+    await userModel.findByIdAndUpdate({_id:new mongoose.Types.ObjectId(request.query.userId)},request.body)
+    return{ message:"User Profile Updated Sucessfully", status:true }
+
 }
 
 export default userService;

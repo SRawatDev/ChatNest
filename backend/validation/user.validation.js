@@ -28,4 +28,14 @@ UserValidation.userVerifyPassword = (body) => {
   return validation;
 };
 
+UserValidation.updateUser=(body)=>{
+  let rules={
+    name: "required|string",
+    email: "required|email",
+    profile_pic: "required|string",
+  }
+  let validation=new Validator(body,rules)
+  return validation
+}
+
 export default UserValidation;

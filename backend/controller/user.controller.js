@@ -83,4 +83,65 @@ UserController.checkingpassword=async(request,response)=>{
     }
 }
 
+
+UserController.UserProfile=async(request,response)=>{
+    try {
+    const data=await userService.getUserData(request) 
+    return response.status(200).json(data)  
+    } catch (error) {
+        console.log(error)
+        return response.status(500).json(
+            {
+                message:error.message,
+                status:false
+            }
+        )
+    }
+}
+UserController.searchingUser=async(request,response)=>{
+    try {
+        const data=await userService.getUserData(request)
+        return response.status(200).json(data)
+        
+    } catch (error) {
+        console.log(error)
+        return response.status(500).json(
+            {
+                message:error.message,
+                status:false
+            }
+        )
+        
+    }
+
+}
+
+UserController.userUpdateProfile=async(request,response)=>{
+    try {
+        const validation=await UserValidation.updateUser(request.body);
+        if (validation.fails()) {
+            let err_msg_all = "";
+            let msg = "";
+            _.each(validation.errors.errors, (err_msg, key) => {
+              msg = key;
+              err_msg_all = err_msg;
+            });
+            return response
+              .status(200)
+              .json({ status: false, message: validation.errors.first(msg) });
+          }
+          const data=await userService.updateUserProfile(request)
+          return response.status(200).json( data)
+        
+    } catch (error) {
+        console.log(error)
+        return response.status(500).json(
+            {
+                message:error.message,
+                status:false
+            }
+        )
+        
+    }
+}
 export default UserController;
