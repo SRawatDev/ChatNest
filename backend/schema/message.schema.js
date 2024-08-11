@@ -20,6 +20,16 @@ const messageSchema = new mongoose.Schema({
         type : mongoose.Schema.ObjectId,
         required : true,
         ref : 'users'
+    },
+    status:{
+        type:String,
+        enum:["active",'inactive'],
+        default:"active",
+    },
+    is_deleted:{
+        type:String,
+        enum:["0","1"],
+        default:"0"
     }
 },{
     timestamps : true

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from "mongoose"
 const userSchema =  new mongoose.Schema({
     name : {
         type : String,
@@ -13,6 +13,19 @@ const userSchema =  new mongoose.Schema({
     profile_pic : {
         type : String,
         default : ""
+    },
+    status:{
+        type:String,
+        enum:["active",'inactive'],
+        default:"active",
+    },
+    is_deleted:{
+        type:String,
+        enum:["0","1"],
+        default:"0"
+    },
+    tokken:{
+        type:String
     }
 },{
     timestamps : true
