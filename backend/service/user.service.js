@@ -31,12 +31,16 @@ userService.verifyEmail=async(request)=>{
 }
 userService.verifyPassword=async(request)=>{
     const userData=await userModel.findOne({_id:new mongoose.Types.ObjectId(request.body.userId)},{email:1,password:1,name:1,tokken:1})
+    if(!userData)
+    {
+        return {message:"user is not exist", status:false}
+    }
     if(!await bcrypt.compare(request.body.password,userData.password)){
         return {message:"password is incorrect",status:false}
     }
     const data=jwt.sign(userData.toObject(),"sumitrawat")
     userData.tokken=data;
-    return {message:"Password is correct", data:userData}
+    return {message:"Password is correct", data:userData,status:true}
 }
 userService.getUserData=async(request)=>{
     const data=request.UserData;
@@ -70,5 +74,7 @@ userService.updateUserProfile=async(request)=>{
     return{ message:"User Profile Updated Sucessfully", status:true }
 
 }
+
+
 
 export default userService;

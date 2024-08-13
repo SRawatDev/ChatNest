@@ -10,4 +10,6 @@ routes.post("/verifypassword",UserController.checkingpassword)
 routes.get("/getUserData",usermiddleware,UserController.UserProfile)
 routes.get("/allactiveUser",usermiddleware,UserController.searchingUser)
 routes.post("/updateUserProfile",usermiddleware,UserController.userUpdateProfile)
+routes.post("/userLogout",usermiddleware,UserController.userLogout)
+
 export default routes;
