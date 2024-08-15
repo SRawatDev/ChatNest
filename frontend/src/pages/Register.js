@@ -1,89 +1,170 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { Backendapi } from "../apis/api";
+import callAPI from "../apiUtils/apiCall";
+import { useNavigate } from "react-router-dom";
+import Toaster from "../Toaster/Toaster";
 
 function Register() {
-  const [imageUpload, setImageUpload] = useState({
-    tempImage: "",
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    profile_pic: "",
   });
-  const UploadImage = (e, allowedFileTypes) => {
-    let file = e?.target?.files[0];
-    console.log("Selected file:", file);
 
-    if (file && allowedFileTypes.includes(file.type)) {
-      setImageUpload({
-        tempImage: URL.createObjectURL(file),
-      });
+  const navigate = useNavigate();
+  const [message, setMessage] = useState({
+    status: "",
+    message: "",
+    key: 0,
+  });
+  const [imageUrl, setImageUrl] = useState("");
+  const allowedFileTypes = ["image/jpeg", "image/png", "image/gif"];
 
+  const UploadImage = async (e) => {
+    const files = Array.from(e.target.files);
+    const validFiles = files.filter((file) =>
+      allowedFileTypes.includes(file.type)
+    );
+    if (validFiles.length > 0) {
       const formData = new FormData();
-      formData.append("tempImage", file); 
-      console.log("FormData content:", formData.get("tempImage"));
-      axios
-        .post("http://localhost:4000/v1/api/uploadImage", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          console.log("Image upload response:", response);
-        })
-        .catch((error) => {
-          console.error("Error uploading image:", error);
-        });
-    } else {
-      console.error("Unsupported file type or no file selected.");
+      validFiles.forEach((file) => formData.append("tempImage", file));
+      try {
+        const response = await callAPI(
+          Backendapi.imageUpload,
+          {},
+          "post",
+          formData,
+          false
+        );
+        setImageUrl(response?.path[0]);
+      } catch (error) {
+        console.error("Error uploading images:", error);
+      }
     }
   };
-  const allowedFileTypes = ["image/jpeg", "image/png", "image/gif"];
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!imageUrl) {
+      return;
+    }
+    try {
+      const requestData = { ...data, profile_pic: imageUrl };
+      const response = await callAPI(
+        Backendapi.register,
+        {},
+        "post",
+        requestData,
+        false
+      );
+      setMessage({
+        status: response.status,
+        message: response.message,
+        key: Date.now(),
+      });
+      if (response.status === true) {
+        setTimeout(() => {
+          navigate("/email");
+        }, 2000);
+      }
+    } catch (error) {
+      console.log("Error during registration:", error.message);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value });
+  };
+
   return (
-    <div className="mt-5">
-      <div className="bg-white w-full max-w-sm mx-2 rounded overflow-hidden p-4">
-        <h3>Welcome to chat app</h3>
-        <form action="">
-          <div className="flex flex-col gap-1">
-            <label htmlFor="name">Name:</label>
-            <input
-              type="text"
-              id="name"
-              placeholder="Enter your Name"
-              className="bg-slate-50 px-2 py-1 focus:outline-primary"
-            />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your email"
-              className="bg-slate-50 px-2 py-1 focus:outline-primary"
-            />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              className="bg-slate-50 px-2 py-1 focus:outline-primary"
-            />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="image">
-              Image:
-              <div className="h-14 bg-slate-200 flex justify-center items-center border rounded hover:border-primary">
-                <p className="text-sm">Upload your profile image</p>
+    <>
+      <Toaster
+        message={message.message}
+        status={message.status}
+        key={message.key}
+      />
+      <div className="mt-5 flex justify-center">
+        <div className="bg-white w-full max-w-md mx-2 rounded-lg shadow-lg p-6">
+          <h3 className="text-xl font-semibold mb-4">
+            Welcome to the Chat App
+          </h3>
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1">
+                <label htmlFor="name" className="font-medium text-gray-700">
+                  Name:
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Enter your Name"
+                  value={data.name}
+                  onChange={handleChange}
+                  name="name"
+                  required
+                  className="bg-slate-50 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+                />
               </div>
-            </label>
-            <input
-              type="file"
-              id="image"
-              name="tempImage"
-              onChange={(e) => UploadImage(e, allowedFileTypes)}
-              className="bg-slate-50 px-2 py-1 focus:outline-primary hidden"
-            />
-          </div>
-        </form>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="email" className="font-medium text-gray-700">
+                  Email:
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Enter your email"
+                  value={data.email}
+                  onChange={handleChange}
+                  name="email"
+                  required
+                  className="bg-slate-50 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="password" className="font-medium text-gray-700">
+                  Password:
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Enter your password"
+                  value={data.password}
+                  onChange={handleChange}
+                  name="password"
+                  required
+                  className="bg-slate-50 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="image" className="font-medium text-gray-700 ">
+                  Image:
+                  <div className="h-14 bg-slate-200 flex justify-center items-center border-2 border-dashed border-gray-300 rounded-lg hover:border-primary">
+                    <p className="text-sm">Upload your profile image</p>
+                  </div>
+                </label>
+                <input
+                  type="file"
+                  id="image"
+                  name="tempImage"
+                  onChange={UploadImage}
+                  className="bg-slate-50 px-2 py-1 focus:outline-primary hidden"
+                  multiple
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="mt-4 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

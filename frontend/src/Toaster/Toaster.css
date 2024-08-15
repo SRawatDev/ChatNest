@@ -1,0 +1,11 @@
+/* styles.css */
+.toast-success {
+    background-color: #28a745; /* Green */
+    color: white;
+  }
+  
+  .toast-error {
+    background-color: #dc3545; /* Red */
+    color: white;
+  }
+  

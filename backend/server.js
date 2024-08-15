@@ -15,6 +15,7 @@ app.use(cors({
     origin: "*"
 }));
 const __filename = fileURLToPath(import.meta.url);
+console.log("-->>>",__filename)
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public', 'images')));
 app.use(express.json());
