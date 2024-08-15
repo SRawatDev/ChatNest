@@ -8,7 +8,7 @@ import Router from "./routes/api.js";
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
 
-const port = 4000;
+const PORT = process.env.PORT || 8000;
 const app = express();
 dotenv.config()
 app.use(cors({
@@ -22,6 +22,6 @@ app.use(cookieParser())
 app.use(fileUpload())
 app.use("/v1/api/", Router);
 await connection();
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
