@@ -5,11 +5,12 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import connection from "./db/connection.js";
 import Router from "./routes/api.js";
+import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
 
 const port = 4000;
 const app = express();
-
+dotenv.config()
 app.use(cors({
     origin: "*"
 }));
