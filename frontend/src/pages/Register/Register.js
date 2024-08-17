@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Backendapi } from "../apis/api";
-import callAPI from "../apiUtils/apiCall";
+import { Backendapi } from "../../apis/api";
+import callAPI from "../../apiUtils/apiCall";
 import { useNavigate } from "react-router-dom";
-import Toaster from "../Toaster/Toaster";
+import Toaster from "../../Toaster/Toaster";
 
 function Register() {
   const [data, setData] = useState({

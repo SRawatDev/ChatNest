@@ -79,7 +79,7 @@ UserController.UserProfile = async (request, response) => {
 };
 UserController.searchingUser = async (request, response) => {
   try {
-    const data = await userService.getUserData(request);
+    const data = await userService.searchingUser(request);
     return response.status(200).json(data);
   } catch (error) {
     console.log(error);

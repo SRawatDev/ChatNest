@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import Register from "../pages/Register";
-import CheckEmail from "../pages/CheckEmail";
-import Checkpassword from "../pages/Checkpassword";
-import Home from "../pages/Home";
+import Register from "../pages/Register/Register";
+import CheckEmail from "../pages/EmailVerification/CheckEmail";
+import Checkpassword from "../pages/Passwordverification/Checkpassword";
+import Home from "../pages/Home/Home";
 import Message from "../component/Message";
 import AuthLayout from "../layout";
 const router = createBrowserRouter([
@@ -20,18 +20,20 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "email",
+        path: "emailVerification",
         element: (
-            <AuthLayout>
+          <AuthLayout>
             <CheckEmail />
           </AuthLayout>
         ),
       },
       {
-        path: "password",
-        element:  <AuthLayout>
-        <Checkpassword />
-      </AuthLayout>,
+        path: "passwordVerfication",
+        element: (
+          <AuthLayout>
+            <Checkpassword />
+          </AuthLayout>
+        ),
       },
       {
         path: "",

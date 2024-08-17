@@ -5,16 +5,11 @@ const callAPI = async (
   params = {},
   method = "get",
   data = null,
-  multipart
+  multipart = false
 ) => {
-  
   const headers = multipart
-    ? {
-      "Content-Type": "application/json",
-    }
-    : {
-      "Content-Type": "multipart/form-data",
-    }
+    ? { "Content-Type": "multipart/form-data" }
+    : { "Content-Type": "application/json" };
 
   let response;
   try {
@@ -40,5 +35,6 @@ const callAPI = async (
     throw error;
   }
 };
+
 
 export default callAPI;
