@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../assests/logo.png"; // Fixed typo in assets
+import logo from "../../assests/logo.png";
 import "./home.css";
 import callAPI from "../../apiUtils/apiCall";
 import { Backendapi } from "../../apis/api";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../../component/Sidebar";
+import MessagePage from "../../component/MessagePage";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/userSlice";
+
 function Home() {
+  const user=useSelector((state)=>state.user)
+  const dispatch=useDispatch()
   const [expanded, setExpanded] = useState(false);
-  const [data, setdata] = useState();
+  const [data, setData] = useState();
+ 
+
   const handleToggle = () => setExpanded(!expanded);
   useEffect(() => {
     const fetchData = async () => {
@@ -14,72 +24,31 @@ function Home() {
           Backendapi.allactiveUserList,
           {},
           "get",
-          {},
-          false
+          null,
+          true
         );
-        setdata(response.data);
+        setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
-  }, [0]);
+  }, []);
+
+  
   return (
-    <div>
-      <div className="dash-navbar">
-        <div
-          className={expanded ? "hamburger1 expanded" : "hamburger1"}
-          onClick={handleToggle}
-        >
-          <div className="line"></div>
-          <div className="line"></div>
-          <div className="line"></div>
-        </div>
-        <div className="logo-of-prepbytes">
-          <img src={logo} alt="image not found" />
-        </div>
+    <>
+      <div className="grid grid-cols-[300px,1fr] h-screen  max-h-screen">
+        <section className="bg-white">
+          <Sidebar />
+        </section>
+        <section>
+  
+          <MessagePage />
+        </section>
       </div>
-      <div className="dashboard-toggle">
-        <div
-          className={
-            expanded
-              ? "inner-dashboard-detail expanded"
-              : "inner-dashboard-detail"
-          }
-        >
-          {expanded && (
-            <h1>
-              <i className="fa-solid fa-book"></i> Users
-            </h1>
-          )}
-          <div>
-            {data?.map((item, key) => {
-              return (
-                <>
-                  <h3>{item?.name}</h3>
-                  <img src={item.profile_pic} />
-                </>
-              );
-            })}
-          </div>
-        </div>
-        <div className="dashboard-empty">
-          <div class="message-container">
-            <input
-              type="text"
-              name="message"
-              id="message"
-              class="message-sent"
-              placeholder="Type your message..."
-            />
-            <button type="button" class="send-button">
-              Send
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
+
 export default Home;

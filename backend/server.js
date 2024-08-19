@@ -7,12 +7,14 @@ import connection from "./db/connection.js";
 import Router from "./routes/api.js";
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
-
 const PORT = process.env.PORT || 8000;
 const app = express();
 dotenv.config()
 app.use(cors({
-    origin: "*"
+    origin: "http://localhost:3000",
+    credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: "Content-Type,Authorization"
 }));
 const __filename = fileURLToPath(import.meta.url);
 console.log("-->>>",__filename)

@@ -65,7 +65,7 @@ function Register() {
       });
       if (response.status === true) {
         setTimeout(() => {
-          navigate("/email");
+          navigate("/emailVerification");
         }, 2000);
       }
     } catch (error) {

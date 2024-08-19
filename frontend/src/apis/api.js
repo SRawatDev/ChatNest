@@ -1,10 +1,10 @@
 export const Backendapi={
-    register:"signup",
-    imageUpload:"uploadImage",
-    emailVerify:"emailVerify",
-    passwordVerify:"verifypassword",
-    userList:"getUserData",
-    allactiveUserList:"allactiveUser",
-    updateUserProfile:"updateUserProfile",
-    userLogout:"userLogout"
+    register:"v1/api/signup",
+    imageUpload:"v1/api/uploadImage",
+    emailVerify:"v1/api/emailVerify",
+    passwordVerify:"v1/api/verifypassword",
+    userProfile:"v1/api/getUserData",
+    allactiveUserList:"v1/api/allactiveUser",
+    updateUserProfile:"v1/api/updateUserProfile",
+    userLogout:"v1/api/userLogout"
 }

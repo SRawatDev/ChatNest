@@ -1,12 +1,12 @@
 import React from 'react'
 
-function Message() {
+function MessagePage() {
   return (
     <div>
-        Message
+      messageapage
       
     </div>
   )
 }
 
-export default Message
+export default MessagePage
