@@ -35,11 +35,17 @@ function CheckEmail() {
       });
       if (response.status === true) {
         setTimeout(() => {
-          navigate("/passwordVerfication", { state: { UserId:response?.data?._id } });
+          navigate("/passwordVerfication", {
+            state: { UserId: response?.data?._id },
+          });
         }, 2000);
       }
-      
     } catch (error) {
+      setMessage({
+        status: false,
+        message: error.message,
+        key: Date.now(),
+      });
       console.log("Error during registration:", error.message);
     }
   };

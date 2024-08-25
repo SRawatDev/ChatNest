@@ -5,7 +5,8 @@ const callAPI = async (
   params = {},
   method = "get",
   data = null,
-  multipart = false
+  multipart = false,
+ 
 ) => {
   const token = localStorage.getItem("UserTokken");
   const headers = multipart
@@ -22,7 +23,7 @@ const callAPI = async (
         response = await axiosInt(method, endpoint, null, { headers, params });
         break;
       case "post":
-        console.log("=================",params,data)
+       
         response = await axiosInt(method, endpoint, data, { headers });
         break;
       case "put":

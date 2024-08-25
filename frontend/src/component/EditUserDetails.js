@@ -3,7 +3,7 @@ import { Backendapi } from "../apis/api";
 import callAPI from "../apiUtils/apiCall";
 import Divider from "./Divider";
 import Toaster from "../Toaster/Toaster";
-import avatar from "../assests/avatar.avif";
+import Avatar from "./Avatar";
 function EditUserDetails({ onClose, data }) {
   const [imageUrl, setImageUrl] = useState("");
   const [userData, setUserData] = useState(data || {});
@@ -31,6 +31,11 @@ function EditUserDetails({ onClose, data }) {
         );
         setImageUrl(response?.path[0]);
       } catch (error) {
+        setMessage({
+          status: false,
+          message: "connection not found",
+          key: Date.now(),
+        });
         console.error("Error uploading images:", error);
       }
     }
@@ -53,6 +58,11 @@ function EditUserDetails({ onClose, data }) {
         setUserData(response.Data);
       }
     } catch (error) {
+      setMessage({
+        status: false,
+        message: "connection not found",
+        key: Date.now(),
+      });
       console.error("Error fetching data:", error);
     }
   };
@@ -81,18 +91,30 @@ function EditUserDetails({ onClose, data }) {
         message: response.message,
         key: Date.now(),
       });
+      if(response.status)
+      {
+        localStorage.setItem("profileImage",response?.Data?.profile_pic)
+      }
       await fetchData();
     } catch (error) {
-      console.error("Error updating user profile:", error);
+      console.log("errr", error);
+
+      setMessage({
+        status: false,
+        message: "connection not found",
+        key: Date.now(),
+      });
     }
   };
+
   return (
     <>
-    <Toaster
+      <Toaster
         message={message.message}
         status={message.status}
         key={message.key}
       />
+
       <div className="fixed top-0 bottom-0 left-0 right-0 bg-gray-700 bg-opacity-40 flex justify-center items-center z-10">
         <div className="bg-white p-4 py-6 m-1 rounded w-full max-w-sm">
           <h2 className="font-semibold">Profile Details</h2>

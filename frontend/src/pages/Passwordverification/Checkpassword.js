@@ -38,21 +38,28 @@ function Checkpassword() {
         data,
         withCredentials: true,
       });
-
-      localStorage.setItem("UserTokken", response?.data?.data?.tokken);
       setMessage({
         status: response?.data?.status,
         message: response?.data?.message,
         key: Date.now(),
-      });
+      });     
       if (response?.data?.status == true) {
-        console.log("response", response?.data?.data?.tokken);
+
+        localStorage.setItem("UserTokken", response?.data?.data?.tokken);
+        localStorage.setItem("userId",response?.data?.data?._id)
+        localStorage.setItem("profileImage",response?.data?.data?.profile_pic)
         dispatch(setUser(response?.data?.data));
         setTimeout(() => {
           navigate("/");
         }, 2000);
       }
     } catch (error) {
+      setMessage({
+        status: false,
+        message: "connection not found",
+        key: Date.now(),
+      });
+      
       console.log("Error during registration:", error.message);
     }
   };

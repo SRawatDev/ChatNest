@@ -3,12 +3,13 @@ import cors from "cors";
 import fileUpload from "express-fileupload";
 import { fileURLToPath } from 'url';
 import path from 'path';
+import { app,server } from "./socket/index.js";
 import connection from "./db/connection.js";
 import Router from "./routes/api.js";
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
 const PORT = process.env.PORT || 8000;
-const app = express();
+// const app = express();
 dotenv.config()
 app.use(cors({
     origin: "http://localhost:3000",
@@ -25,6 +26,6 @@ app.use(cookieParser())
 app.use(fileUpload())
 app.use("/v1/api/", Router);
 await connection();
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

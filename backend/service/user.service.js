@@ -24,7 +24,7 @@ userService.Register = async (request) => {
 
 userService.verifyEmail = async (request) => {
   const data = await userModel
-    .findOne({ email: request.body.email })
+    .findOne({ email: request.body.email },{_id:1})
     .select("-password");
   if (!data) {
     return { message: "Email is not register", status: false };
@@ -34,7 +34,7 @@ userService.verifyEmail = async (request) => {
 userService.verifyPassword = async (request) => {
   const userData = await userModel.findOne(
     { _id: new mongoose.Types.ObjectId(request.body.userId) },
-    { email: 1, password: 1, name: 1, tokken: 1 }
+    { email: 1, password: 1, name: 1, tokken: 1,profile_pic:1 }
   );
   if (!userData) {
     return { message: "user is not exist", status: false };
@@ -51,12 +51,26 @@ userService.getUserData = async (request) => {
   return { message: "User Data", status: true, Data: data };
 };
 userService.searchingUser = async (request) => {
+  const userData=request.UserData;
+  console.log('====',userData)
   const UserName = request.query.search;
   const regex = new RegExp(UserName, "i");
   const data = await userModel.find(
-    { name: regex, status: "active" },
-    { password: 0, status: 0, is_deleted: 0 }
+    {
+      name: regex, 
+      status: "active", 
+      _id: { $ne: userData?._id }
+    },
+    {
+      password: 0, 
+      status: 0, 
+      is_deleted: 0, 
+      createdAt: 0, 
+      updatedAt: 0, 
+      __v: 0 
+    }
   );
+  
   return { message: "listing of all user", status: true, data: data };
 };
 userService.updateUserProfile = async (request) => {
@@ -70,11 +84,13 @@ userService.updateUserProfile = async (request) => {
 
   await moveimage.moveFileFromFolder(request.body.profile_pic, "images");
 
-  await userModel.findByIdAndUpdate(
-    { _id: new mongoose.Types.ObjectId(request.body.userId) },
-    request.body
-  );
-  return { message: "User Profile Updated Sucessfully", status: true };
+  const data=await userModel.findByIdAndUpdate(
+    new mongoose.Types.ObjectId(request.body.userId), // First parameter is the ID
+    request.body, // Second parameter is the update data
+    { new: true } // Options object, where `new: true` returns the updated document
+  ).select("-password");
+  
+  return { message: "User Profile Updated Sucessfully", status: true,Data:data };
 };
 
 export default userService;

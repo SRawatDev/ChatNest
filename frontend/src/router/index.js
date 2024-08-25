@@ -6,6 +6,8 @@ import Checkpassword from "../pages/Passwordverification/Checkpassword";
 import Home from "../pages/Home/Home";
 import MessagePage from "../component/MessagePage";
 import AuthLayout from "../layout";
+import ProtectedRoute from "./ProtectedRoute";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,9 +32,11 @@ const router = createBrowserRouter([
       {
         path: "passwordVerfication",
         element: (
-          <AuthLayout>
-            <Checkpassword />
-          </AuthLayout>
+          <ProtectedRoute>
+            <AuthLayout>
+              <Checkpassword />
+            </AuthLayout>
+          </ProtectedRoute>
         ),
       },
       {

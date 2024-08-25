@@ -9,7 +9,7 @@ function Toaster({ message, status, key }) {
       const toastClass = status === true ? "toast-success" : "toast-error";
       toast(message, {
         className: toastClass,
-        autoClose: 3000, // Optional: automatically close after 3 seconds
+        autoClose: 3000, 
       });
     }
   }, [message, status, key]);

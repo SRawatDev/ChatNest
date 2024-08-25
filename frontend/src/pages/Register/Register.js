@@ -3,6 +3,7 @@ import { Backendapi } from "../../apis/api";
 import callAPI from "../../apiUtils/apiCall";
 import { useNavigate } from "react-router-dom";
 import Toaster from "../../Toaster/Toaster";
+import { Link } from "react-router-dom";
 
 function Register() {
   const [data, setData] = useState({
@@ -37,8 +38,20 @@ function Register() {
           formData,
           false
         );
+        if (!response?.status) {
+          setMessage({
+            status: response?.status,
+            message: response.message,
+            key: Date.now(),
+          });
+        }
         setImageUrl(response?.path[0]);
       } catch (error) {
+        setMessage({
+          status: false,
+          message: error.message,
+          key: Date.now(),
+        });
         console.error("Error uploading images:", error);
       }
     }
@@ -69,6 +82,11 @@ function Register() {
         }, 2000);
       }
     } catch (error) {
+      setMessage({
+        status: false,
+        message: error.message,
+        key: Date.now(),
+      });
       console.log("Error during registration:", error.message);
     }
   };
@@ -141,7 +159,10 @@ function Register() {
                 <label htmlFor="image" className="font-medium text-gray-700 ">
                   Image:
                   <div className="h-14 bg-slate-200 flex justify-center items-center border-2 border-dashed border-gray-300 rounded-lg hover:border-primary">
-                    <p className="text-sm">Upload your profile image</p>
+                    <p className="text-sm">
+                      {" "}
+                      {imageUrl ? imageUrl : "Upload your profile image"}
+                    </p>
                   </div>
                 </label>
                 <input
@@ -161,7 +182,9 @@ function Register() {
                 Submit
               </button>
             </div>
+            
           </form>
+          <p className='my-3 text-center'>Already have account ? <Link to={"/emailVerification"} className='hover:text-primary font-semibold'>Login</Link></p>
         </div>
       </div>
     </>
