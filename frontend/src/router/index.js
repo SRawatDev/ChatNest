@@ -7,6 +7,7 @@ import Home from "../pages/Home/Home";
 import MessagePage from "../component/MessagePage";
 import AuthLayout from "../layout";
 import ProtectedRoute from "./ProtectedRoute";
+import TokenProtectedRoute from "./TokenProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -41,11 +42,19 @@ const router = createBrowserRouter([
       },
       {
         path: "",
-        element: <Home />,
+        element: (
+          <TokenProtectedRoute>
+            <Home />
+          </TokenProtectedRoute>
+        ),
         children: [
           {
             path: ":userId",
-            element: <MessagePage />,
+            element: (
+              <TokenProtectedRoute>
+                <MessagePage />
+              </TokenProtectedRoute>
+            ),
           },
         ],
       },

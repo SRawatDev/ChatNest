@@ -113,7 +113,7 @@ UserController.userLogout = async (request, response) => {
       secure: true,
     };
     return response.cookie("token", "", cookieOptions).status(200).json({
-      message: "session out",
+      message: "Logout out successfully",
       success: true,
     });
   } catch (error) {

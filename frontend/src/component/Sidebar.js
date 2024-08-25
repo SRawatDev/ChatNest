@@ -4,7 +4,9 @@ import { useSelector } from "react-redux";
 import EditUserDetails from "./EditUserDetails";
 import SearchUser from "./SearchUser";
 import Avatar from "./Avatar";
+import Logout from "./Logout";
 function Sidebar() {
+  const [logouttoglle, setlogouttoglle] = useState(false);
   const [openSearchUser, setOpenSearchUser] = useState(false);
   const user = useSelector((state) => state.user);
   const [edituser, setEdituser] = useState(false);
@@ -36,15 +38,14 @@ function Sidebar() {
             title="User"
           >
             <button onClick={() => setEdituser(true)}>
-      
-            <Avatar/>
+              <Avatar />
             </button>
           </div>
           <div
             className="w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-300 rounded"
             title="logout"
           >
-            <i className="fa-solid fa-right-from-bracket text-2xl"></i>
+            <i className="fa-solid fa-right-from-bracket text-2xl" onClick={()=>setlogouttoglle(true)}></i>
           </div>
         </div>
       </div>
@@ -76,6 +77,8 @@ function Sidebar() {
       {openSearchUser && (
         <SearchUser onClose={() => setOpenSearchUser(false)} />
       )}
+
+      {logouttoglle && <Logout onClose={() => setlogouttoglle(false)}  />}
     </div>
   );
 }

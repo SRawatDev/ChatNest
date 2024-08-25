@@ -101,7 +101,7 @@ function EditUserDetails({ onClose, data }) {
 
       setMessage({
         status: false,
-        message: "connection not found",
+        message:error.message,
         key: Date.now(),
       });
     }
