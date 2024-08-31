@@ -8,6 +8,8 @@ import MessagePage from "../component/MessagePage";
 import AuthLayout from "../layout";
 import ProtectedRoute from "./ProtectedRoute";
 import TokenProtectedRoute from "./TokenProtectedRoute";
+import GroupChat from "../component/Groupchat";
+import Groupchats from "../component/Groupchats";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +55,14 @@ const router = createBrowserRouter([
             element: (
               <TokenProtectedRoute>
                 <MessagePage />
+              </TokenProtectedRoute>
+            ),
+          },
+          {
+            path: "groupchat/:roomId",
+            element: (
+              <TokenProtectedRoute>
+                <Groupchats />
               </TokenProtectedRoute>
             ),
           },

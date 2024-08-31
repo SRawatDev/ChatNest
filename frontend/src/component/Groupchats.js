@@ -8,55 +8,28 @@ import Loading from "./Loading";
 import uploadFile from "../helper/uploadFile";
 import avavatar from "../assests/avavatar.avif";
 import "./app.css";
-import { useLocation } from 'react-router-dom';
-function MessagePage() {
-  const location = useLocation();
-  console.log('Received location state:', location.state);
-
-  console.log("=========================",location)
-  const { userId } = useParams();
-  const [allmessage, setallmessage] = useState([]);
+import { useLocation } from "react-router-dom";
+const Groupchats = () => {
+  const socketConnection = useSelector(
+    (state) => state?.user?.socketConnection
+  );
+  const { roomId } = useParams();
   const [groupMessage, setgroupmessage] = useState({
     senderId: localStorage.getItem("userId"),
-    roomId: userId,
+    roomId: roomId,
     text: "",
     imageUrl: "",
     videoUrl: "",
   });
   const [openImageVideoUpload, setOpenImageVideoUpload] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [useData, setUserData] = useState({
-    name: "",
-    email: "",
-    online: false,
-    profile_pic: "",
-    _id: "",
-  });
-
-  const [message, setMessage] = useState({
-    text: "",
-    imageUrl: "",
-    videoUrl: "",
-  });
-  const socketConnection = useSelector(
-    (state) => state?.user?.socketConnection
-  );
 
   useEffect(() => {
     if (socketConnection) {
-      socketConnection.emit("message-page", userId);
-      socketConnection.on("messageUser", (data) => {
-        setUserData(data);
-      });
-      socketConnection.on("message", (data) => {
-        setallmessage(data);
-      });
-
-      socketConnection.emit("group-message", groupMessage);
     }
-  }, [socketConnection, userId]);
+  }, [socketConnection]);
   const handleClearUploadImage = () => {
-    setMessage((preve) => {
+    setgroupmessage((preve) => {
       return {
         ...preve,
         imageUrl: "",
@@ -70,7 +43,7 @@ function MessagePage() {
     setLoading(false);
     setOpenImageVideoUpload(false);
 
-    setMessage((preve) => {
+    setgroupmessage((preve) => {
       return {
         ...preve,
         imageUrl: uploadPhoto.url,
@@ -86,58 +59,44 @@ function MessagePage() {
     setLoading(false);
     setOpenImageVideoUpload(false);
 
-    setMessage((preve) => {
+    setgroupmessage((preve) => {
       return {
         ...preve,
         videoUrl: uploadPhoto.url,
       };
     });
   };
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setgroupmessage({ ...groupMessage, [name]: value });
+  };
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    try {
+      if (groupMessage.imageUrl || groupMessage.text || groupMessage.videoUrl) {
+        if (socketConnection) {
+          // if(groupchat)
+          // {
+          socketConnection.emit("group-message", groupMessage);
+          setgroupmessage((prev) => ({
+            ...prev,
+            text: groupMessage.text,
+            imageUrl: groupMessage.imageUrl,
+            videoUrl: groupMessage.videoUrl,
+          }));
+          // }
+        }
+      }
+    } catch (error) {}
+  };
   const handleClearUploadVideo = () => {
-    setMessage((preve) => {
+    setgroupmessage((preve) => {
       return {
         ...preve,
         videoUrl: "",
       };
     });
   };
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setMessage({ ...message, [name]: value });
-  };
-  const handleSendMessage = async (e) => {
-    e.preventDefault();
-    try {
-      if (message.imageUrl || message.text || message.videoUrl) {
-        if (socketConnection) {
-          socketConnection.emit("new message", {
-            sender: localStorage.getItem("userId"),
-            reciever: userId,
-            text: message.text,
-            imageUrl: message.imageUrl,
-            videoUrl: message.videoUrl,
-            msgByUserId: localStorage.getItem("userId"),
-          });
-          // if(groupchat)
-          // {
-            socketConnection.emit("group-message", groupMessage);
-            setgroupmessage(prev => ({
-              ...prev,
-              text: message.text,
-              imageUrl: message.imageUrl,
-              videoUrl: message.videoUrl,
-            }));
-          // }
-          setMessage({
-            text: "",
-            imageUrl: "",
-            videoUrl: "",
-          });
-        }
-      }
-    } catch (error) {}
-  };
-  console.log("allmessageallmessageallmessage", allmessage);
   return (
     <div
       style={{
@@ -154,13 +113,13 @@ function MessagePage() {
           </Link>
           <div>
             <img
-              src={`http://localhost:8000/images/${useData?.profile_pic}`}
+              //   src={`http://localhost:8000/images/${useData?.profile_pic}`}
               alt=""
               height={50}
               width={50}
               style={{
                 borderRadius: "50%",
-                border: useData.online ? "4px solid green" : "4px solid red", // Conditional border color
+                // border: useData.online ? "4px solid green" : "4px solid red", // Conditional border color
               }}
               onError={(e) => {
                 e.target.onerror = null;
@@ -170,14 +129,14 @@ function MessagePage() {
           </div>
           <div>
             <h3 className="font-semibold text-lg my-0 text-ellipsis line-clamp-1">
-              {useData?.name}
+              {/* {useData?.name} */}
             </h3>
             <p className="-my-2 text-sm">
-              {useData?.online ? (
+              {/* {useData?.online ? (
                 <span className="text-primary">online</span>
               ) : (
                 <span className="text-slate-400">offline</span>
-              )}
+              )} */}
             </p>
           </div>
         </div>
@@ -191,7 +150,7 @@ function MessagePage() {
       <section className="h-[calc(100vh-128)] overflow-x-hidden overflow-y-scroll scrollbar">
         {/* upload image display    */}
         {/**upload Image display */}
-        {message.imageUrl && (
+        {groupMessage.imageUrl && (
           <div className="w-full h-full sticky bottom-0 bg-slate-700 bg-opacity-30 flex justify-center items-center rounded overflow-hidden">
             <div
               className="w-fit p-2 absolute top-0 right-0 cursor-pointer hover:text-red-600"
@@ -201,7 +160,7 @@ function MessagePage() {
             </div>
             <div className="bg-white p-3">
               <img
-                src={message.imageUrl}
+                src={groupMessage.imageUrl}
                 alt="uploadImage"
                 className="aspect-square w-full h-full max-w-sm m-2 object-scale-down"
               />
@@ -209,7 +168,7 @@ function MessagePage() {
           </div>
         )}
         {/**upload video display */}
-        {message.videoUrl && (
+        {groupMessage.videoUrl && (
           <div className="w-full h-full sticky bottom-0 bg-slate-700 bg-opacity-30 flex justify-center items-center rounded overflow-hidden">
             <div
               className="w-fit p-2 absolute top-0 right-0 cursor-pointer hover:text-red-600"
@@ -219,7 +178,7 @@ function MessagePage() {
             </div>
             <div className="bg-white p-3">
               <video
-                src={message.videoUrl}
+                src={groupMessage.videoUrl}
                 className="aspect-square w-full h-full max-w-sm m-2 object-scale-down"
                 controls
                 muted
@@ -235,39 +194,7 @@ function MessagePage() {
         )}
 
         {/* all message will show here */}
-        <div>
-          {allmessage.map((msg, index) => {
-            return (
-              <div
-                className={`p-1 py-1 rounded w-fit max-w-[280px] md:max-w-sm lg:max-w-md ${
-                  localStorage.getItem("userId") === msg?.msgByUserId
-                    ? "ml-auto bg-teal-100"
-                    : "bg-white"
-                }`}
-              >
-                <div className="w-full relative">
-                  {msg?.imageUrl && (
-                    <img
-                      src={msg?.imageUrl}
-                      className="w-full h-full object-scale-down"
-                    />
-                  )}
-                  {msg?.videoUrl && (
-                    <video
-                      src={msg.videoUrl}
-                      className="w-full h-full object-scale-down"
-                      controls
-                    />
-                  )}
-                </div>
-                <p className="px-2">{msg.text}</p>
-                <p className="text-xs ml-auto w-fit">
-                  {moment(msg.createdAt).format("hh:mm")}
-                </p>
-              </div>
-            );
-          })}
-        </div>
+        <div></div>
       </section>
 
       {/* send message */}
@@ -323,12 +250,12 @@ function MessagePage() {
             </div>
           )}
         </div>
-        <form className="h-full w-full flex gap-2" onSubmit={handleSendMessage}>
+        <form className="h-full w-full flex gap-2">
           <input
             type="text"
             placeholder="Type here message..."
             className="py-1 px-4 outline-none w-full h-full"
-            value={message.text}
+            value={groupMessage.text}
             name="text"
             onChange={handleOnChange}
           />
@@ -339,6 +266,6 @@ function MessagePage() {
       </section>
     </div>
   );
-}
+};
 
-export default MessagePage;
+export default Groupchats;

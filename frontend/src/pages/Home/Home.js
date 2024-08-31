@@ -60,7 +60,7 @@ function Home() {
   return (
     <>
      
-      <div className="grid lg:grid-cols-[300px,1fr] h-screen max-h-screen">
+      <div className="grid lg:grid-cols-[400px,1fr] h-screen max-h-screen">
         <section className={`bg-white ${!basePath && "hidden"} lg:block`}>
           <Sidebar />
         </section>
