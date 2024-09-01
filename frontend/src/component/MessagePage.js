@@ -9,20 +9,12 @@ import uploadFile from "../helper/uploadFile";
 import avavatar from "../assests/avavatar.avif";
 import "./app.css";
 import { useLocation } from 'react-router-dom';
+import Groupusers from "./Groupusers";
 function MessagePage() {
+  const [showGroupUsers, setShowGroupUsers] = useState(false);
   const location = useLocation();
-  console.log('Received location state:', location.state);
-
-  console.log("=========================",location)
   const { userId } = useParams();
   const [allmessage, setallmessage] = useState([]);
-  const [groupMessage, setgroupmessage] = useState({
-    senderId: localStorage.getItem("userId"),
-    roomId: userId,
-    text: "",
-    imageUrl: "",
-    videoUrl: "",
-  });
   const [openImageVideoUpload, setOpenImageVideoUpload] = useState(false);
   const [loading, setLoading] = useState(false);
   const [useData, setUserData] = useState({
@@ -39,20 +31,20 @@ function MessagePage() {
     videoUrl: "",
   });
   const socketConnection = useSelector(
-    (state) => state?.user?.socketConnection
+    (state) => state?.user?.  socketConnection
   );
 
   useEffect(() => {
     if (socketConnection) {
       socketConnection.emit("message-page", userId);
       socketConnection.on("messageUser", (data) => {
+        console.log("=====dayayayay",data)
+
         setUserData(data);
       });
       socketConnection.on("message", (data) => {
         setallmessage(data);
       });
-
-      socketConnection.emit("group-message", groupMessage);
     }
   }, [socketConnection, userId]);
   const handleClearUploadImage = () => {
@@ -118,16 +110,6 @@ function MessagePage() {
             videoUrl: message.videoUrl,
             msgByUserId: localStorage.getItem("userId"),
           });
-          // if(groupchat)
-          // {
-            socketConnection.emit("group-message", groupMessage);
-            setgroupmessage(prev => ({
-              ...prev,
-              text: message.text,
-              imageUrl: message.imageUrl,
-              videoUrl: message.videoUrl,
-            }));
-          // }
           setMessage({
             text: "",
             imageUrl: "",
@@ -137,7 +119,9 @@ function MessagePage() {
       }
     } catch (error) {}
   };
-  console.log("allmessageallmessageallmessage", allmessage);
+  const handleToggleGroupUsers = () => {
+    setShowGroupUsers((prev) => !prev);
+  };
   return (
     <div
       style={{
@@ -182,7 +166,7 @@ function MessagePage() {
           </div>
         </div>
         <div>
-          <button className="cursor-pointer hover:text-primary">
+          <button className="cursor-pointer hover:text-primary" onClick={handleToggleGroupUsers}>
             <i className="fa-solid fa-bars text-2xl"></i>
           </button>
         </div>
@@ -337,6 +321,12 @@ function MessagePage() {
           </button>
         </form>
       </section>
+      {showGroupUsers && (
+        <div className="overlay" onClick={() => setShowGroupUsers(false)}>
+          <Groupusers Roomusers={[useData]} close={() => setShowGroupUsers(false)} />
+        </div>
+      )}
+
     </div>
   );
 }
