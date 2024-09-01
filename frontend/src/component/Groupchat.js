@@ -196,7 +196,7 @@ const GroupChat = ({ onClose }) => {
           </div>
 
           <div className="mt-2 flex flex-wrap gap-2">
-            {groupname.users.map((userId) => {
+            {groupname?.users?.map((userId) => {
               const user = searchUser.find((user) => user._id === userId);
               return user ? (
                 <Chip
@@ -230,7 +230,7 @@ const GroupChat = ({ onClose }) => {
 
             {searchUser.length !== 0 &&
               !loading &&
-              searchUser.map((user) => (
+              searchUser?.map((user) => (
                 <Groupcard
                   key={user._id}
                   user={user}

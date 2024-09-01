@@ -50,7 +50,7 @@ function Checkpassword() {
         localStorage.setItem("profileImage",response?.data?.data?.profile_pic)
         dispatch(setUser(response?.data?.data));
         setTimeout(() => {
-          navigate("/");
+          navigate("/home");
         }, 2000);
       }
     } catch (error) {

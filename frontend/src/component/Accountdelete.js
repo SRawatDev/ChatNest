@@ -3,11 +3,10 @@ import Toaster from "../Toaster/Toaster";
 import callAPI from "../apiUtils/apiCall";
 import { Backendapi } from "../apis/api";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
-const Logout = ({ onClose }) => {
-  const navigate=useNavigate()
+const Accountdelete = ({ onClose }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [message, setMessage] = useState({
     status: "",
@@ -17,13 +16,13 @@ const Logout = ({ onClose }) => {
   const handleLogout = async (e) => {
     try {
       const response = await callAPI(
-        Backendapi.userLogout,
+        Backendapi.deleteaccount,
         {},
         "post",
         {},
         true
       );
-      navigate("/")
+      navigate("/");
       if (response.success) {
         dispatch(logout());
         localStorage.clear();
@@ -66,9 +65,8 @@ const Logout = ({ onClose }) => {
             <button
               className="bg-primary text-white border px-4 py-2 rounded hover:bg-secondary transition duration-200"
               onClick={handleLogout}
-              
             >
-              logout
+              Delete
             </button>
           </div>
         </div>
@@ -77,4 +75,4 @@ const Logout = ({ onClose }) => {
   );
 };
 
-export default Logout;
+export default Accountdelete;

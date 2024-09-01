@@ -5,6 +5,7 @@ import Divider from "./Divider";
 import Toaster from "../Toaster/Toaster";
 import Avatar from "./Avatar";
 function EditUserDetails({ onClose, data }) {
+  console.log("=========", onClose);
   const [imageUrl, setImageUrl] = useState("");
   const [userData, setUserData] = useState(data || {});
   const [message, setMessage] = useState({
@@ -91,17 +92,23 @@ function EditUserDetails({ onClose, data }) {
         message: response.message,
         key: Date.now(),
       });
-      if(response.status)
-      {
-        localStorage.setItem("profileImage",response?.Data?.profile_pic)
+      
+
+      if (response.status) {
+        localStorage.setItem("profileImage", response?.Data?.profile_pic);
+       
       }
       await fetchData();
+      setTimeout(()=>{
+        onClose();
+      },1000)
+      
     } catch (error) {
       console.log("errr", error);
 
       setMessage({
         status: false,
-        message:error.message,
+        message: error.message,
         key: Date.now(),
       });
     }

@@ -122,6 +122,9 @@ function MessagePage() {
   const handleToggleGroupUsers = () => {
     setShowGroupUsers((prev) => !prev);
   };
+
+
+
   return (
     <div
       style={{
@@ -133,7 +136,7 @@ function MessagePage() {
     >
       <header className="sticky top-0 h-16 bg-white flex justify-between items-center px-4">
         <div className="flex items-center gap-4">
-          <Link to={"/"} className="lg:hidden">
+          <Link to={"/home"} className="lg:hidden">
             <i class="fa-solid fa-angles-left text-2xl"></i>
           </Link>
           <div>
@@ -220,13 +223,20 @@ function MessagePage() {
 
         {/* all message will show here */}
         <div>
-          {allmessage.map((msg, index) => {
+          {allmessage?.map((msg, index) => {
             return (
-              <div
-                className={`p-1 py-1 rounded w-fit max-w-[280px] md:max-w-sm lg:max-w-md ${
+              <div  style={{
+                backgroundColor: "#00FF00",
+                margin: "3px",
+                color: "white",
+                borderRadius: "20px",
+                fontWeight: "bold",
+                borderTopRightRadius: "0",
+              }}
+                className={`p-1 py-1  w-fit max-w-[280px] md:max-w-sm lg:max-w-md ${
                   localStorage.getItem("userId") === msg?.msgByUserId
-                    ? "ml-auto bg-teal-100"
-                    : "bg-white"
+                    ? "ml-auto"
+                    : "bg-#00FF00 mg-3"
                 }`}
               >
                 <div className="w-full relative">

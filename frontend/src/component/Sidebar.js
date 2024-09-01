@@ -11,7 +11,9 @@ import { Backendapi } from "../apis/api";
 import Toaster from "../Toaster/Toaster";
 import chatimg from "../assests/chatapp.webp";
 import avavatar from "../assests/avavatar.avif";
+import Accountdelete from "./Accountdelete";
 function Sidebar() {
+  const [account, setaccount] = useState(false);
   const [message, setMessage] = useState({
     status: "",
     message: "",
@@ -23,6 +25,35 @@ function Sidebar() {
   const [openSearchUser, setOpenSearchUser] = useState(false);
   const user = useSelector((state) => state.user);
   const [edituser, setEdituser] = useState(false);
+  const [userconversation, setuserconversation] = useState([]);
+
+  const handleuserconversation = async () => {
+    try {
+      const response = await callAPI(
+        Backendapi.getconversation,
+        {},
+        "get",
+        null,
+        true
+      );
+
+      if (!response.status) {
+        setMessage({
+          status: response.status,
+          message: response.message,
+          key: Date.now(),
+        });
+      }
+      setuserconversation(response?.data);
+    } catch (error) {
+      setMessage({
+        status: false,
+        message: error.message,
+        key: Date.now(),
+      });
+    }
+  };
+
   const getroomInfo = async () => {
     try {
       const response = await callAPI(
@@ -51,8 +82,10 @@ function Sidebar() {
     }
   };
   useEffect(() => {
+    handleuserconversation();
     getroomInfo();
   }, []);
+
   return (
     <>
       <Toaster
@@ -71,7 +104,7 @@ function Sidebar() {
               }
               title="chat"
             >
-              <i className="fa-regular fa-message text-2xl"></i>
+              <i className="fa-solid fa-trash text-2xl" onClick={()=>setaccount(true)}></i>
             </NavLink>
             <div
               className="w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-300 rounded"
@@ -114,18 +147,95 @@ function Sidebar() {
         {openSearchUser && (
           <SearchUser onClose={() => setOpenSearchUser(false)} />
         )}
-        {group && <GroupChat onClose={() => setgroup(false)} />}
+     {group && <GroupChat onClose={() => setgroup(false)} />}
 
         {logouttoglle && <Logout onClose={() => setlogouttoglle(false)} />}
+        {account && <Accountdelete onClose={() => setaccount(false)} />}
 
         <div className="flex-1 p-4">
           <div className="h-16 flex items-center">
             <h2 className="text-xl font-bold p-4 text-slate-800">Message</h2>
           </div>
           <div className=" p-[0.5px]">
+            {userconversation?.map((item, index) => {
+              return (
+                <Link>
+                  <Link to={"/home/" + item?.user?._id} key={index}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "left",
+                        margin: "10px 0",
+                        flexDirection: "row-reverse",
+                        padding: "15px",
+                        height: "70px",
+                        borderRadius: "10px",
+                        background: `url(${chatimg}) no-repeat center center/cover`, // Example background image
+                        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+                        transition:
+                          "background-color 0.3s ease, transform 0.3s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor =
+                          "rgba(0, 0, 0, 0.7)";
+                        e.currentTarget.style.transform = "scale(1.02)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = "";
+                        e.currentTarget.style.transform = "scale(1)";
+                      }}
+                    >
+                      <div></div>
+                      <div style={{ textAlign: "center", color: "white",margin:"auto" }}>
+                        <p>{item?.messages[0]?.text}</p>
+                      </div>
+                      <div style={{ textAlign: "center" }}>
+                        <img
+                          src={
+                            "http://localhost:8000/images/" +
+                            item?.user?.profile_pic
+                          }
+                          alt="click here"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = avavatar;
+                          }}
+                          style={{
+                            height: "50px",
+                            width: "50px",
+                            borderRadius: "50%",
+                            objectFit: "cover",
+                            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3)",
+                            transition: "transform 0.3s ease",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = "scale(1.1)";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = "scale(1)";
+                          }}
+                        />
+                        <p
+                          style={{
+                            fontFamily: "Arial, sans-serif",
+                            margin: "0 15px 0 0",
+                            fontSize: "14px",
+                            margin: "auto",
+                            fontWeight: "700",
+                            color: "#fff",
+                            textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
+                          }}
+                        ></p>
+                      </div>
+                    </div>
+                  </Link>
+                </Link>
+              );
+            })}
             {roomdata?.map((item, index) => {
               return (
-                <Link to={"/groupchat/" + item?._id} key={index}>
+                <Link to={"/home/groupchat/" + item?._id} key={index}>
                   <div
                     style={{
                       display: "flex",
@@ -177,28 +287,43 @@ function Sidebar() {
                         Created {new Date(item?.updatedAt).toLocaleDateString()}
                       </p>
                     </div>
-                    <img
-                      src={item?.image}
-                      alt="click here"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = avavatar;
-                      }}
-                      style={{
-                        height: "50px",
-                        width: "50px",
-                        borderRadius: "50%",
-                        objectFit: "cover",
-                        boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3)",
-                        transition: "transform 0.3s ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = "scale(1.1)";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = "scale(1)";
-                      }}
-                    />
+                    <div>
+                      <img
+                        src={item?.image}
+                        alt="click here"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = avavatar;
+                        }}
+                        style={{
+                          height: "50px",
+                          width: "50px",
+                          borderRadius: "50%",
+                          objectFit: "cover",
+                          boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3)",
+                          transition: "transform 0.3s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = "scale(1.1)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = "scale(1)";
+                        }}
+                      />
+                      <p
+                        style={{
+                          fontFamily: "Arial, sans-serif",
+                          margin: "0 15px 0 0",
+                          fontSize: "14px",
+                          margin: "auto",
+                          fontWeight: "700",
+                          color: "#fff",
+                          textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
+                        }}
+                      >
+                        Group
+                      </p>
+                    </div>
                   </div>
                 </Link>
               );

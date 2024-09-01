@@ -8,5 +8,7 @@ export const Backendapi={
     updateUserProfile:"v1/api/updateUserProfile",
     userLogout:"v1/api/userLogout",
     createRoom:"v1/api/createRoom",
-    userRoominfo:"v1/api/userRoominfo"
+    userRoominfo:"v1/api/userRoominfo",
+    getconversation:"v1/api/getconversation",
+    deleteaccount:"v1/api/deleteaccount",
 }

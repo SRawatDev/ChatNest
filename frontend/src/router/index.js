@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "register",
+        path: "/",
         element: (
           <AuthLayout>
             <Register />
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "",
+        path: "/home",
         element: (
           <TokenProtectedRoute>
             <Home />

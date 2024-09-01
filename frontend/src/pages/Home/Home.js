@@ -38,34 +38,40 @@ function Home() {
     };
     fetchData();
   }, []);
-  const basePath = location.pathname === "/";
+  const basePath = location.pathname === "/home";
 
   // socket connection
   useEffect(() => {
-    const socketconnection = io("http://localhost:8000", {
-      auth: {
-        token: localStorage.getItem("UserTokken"),
-      },
-    });
-    dispatch(setSocketConnection(socketconnection));
-    socketconnection.on("onlineUser", (data) => {
-      console.log(data);
-      dispatch(setOnlineUser(data));
-    });
-    return () => {
-      socketconnection.disconnected();
-    };
+    try {
+      const socketconnection = io("http://localhost:8000", {
+        auth: {
+          token: localStorage.getItem("UserTokken"),
+        },
+      });
+      dispatch(setSocketConnection(socketconnection));
+      socketconnection.on("onlineUser", (data) => {
+        console.log(data);
+        dispatch(setOnlineUser(data));
+      });
+      return () => {
+        socketconnection.disconnect(); 
+      };
+      
+    } catch (error) {
+      console.log(error);
+    }
+  
   }, []);
+
 
   return (
     <>
-     
       <div className="grid lg:grid-cols-[400px,1fr] h-screen max-h-screen">
         <section className={`bg-white ${!basePath && "hidden"} lg:block`}>
           <Sidebar />
         </section>
         <section className={`${basePath && "hidden"}`}>
-        <Outlet/>
+          <Outlet />
         </section>
 
         <div
