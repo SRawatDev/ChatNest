@@ -136,7 +136,7 @@ function EditUserDetails({ onClose, data }) {
                 <label htmlFor="profile_pic">
                   <div className="relative">
                     <img
-                      src={`${baseUrl.productionUrl}+/images/${userData.profile_pic}`}
+                      src={`${baseUrl.productionUrl}/images/${userData.profile_pic}`}
                       alt="Profile"
                       className="w-24 h-24 rounded-full object-cover"
                       onError={(e) => {
