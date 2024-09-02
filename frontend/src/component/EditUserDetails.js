@@ -3,7 +3,7 @@ import { Backendapi } from "../apis/api";
 import callAPI from "../apiUtils/apiCall";
 import Divider from "./Divider";
 import Toaster from "../Toaster/Toaster";
-import Avatar from "./Avatar";
+import avavatar from "../assests/avavatar.avif";
 function EditUserDetails({ onClose, data }) {
   console.log("=========", onClose);
   const [imageUrl, setImageUrl] = useState("");
@@ -138,6 +138,10 @@ function EditUserDetails({ onClose, data }) {
                       src={`http://localhost:8000/images/${userData.profile_pic}`}
                       alt="Profile"
                       className="w-24 h-24 rounded-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = avavatar;
+                      }}
                     />
                     <button className="absolute bottom-0 right-0 bg-gray-800 text-white text-xs rounded-full p-1">
                       Change
