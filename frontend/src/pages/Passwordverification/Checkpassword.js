@@ -56,7 +56,7 @@ function Checkpassword() {
     } catch (error) {
       setMessage({
         status: false,
-        message: "connection not found",
+        message: error.message,
         key: Date.now(),
       });
       
