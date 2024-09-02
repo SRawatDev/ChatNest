@@ -24,7 +24,7 @@ function Checkpassword() {
     message: "",
     key: 0,
   });
-  const URL = baseUrl.localUrl + Backendapi.passwordVerify;
+  const URL = baseUrl.productionUrl + Backendapi.passwordVerify;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
