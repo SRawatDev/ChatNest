@@ -1,6 +1,7 @@
 import React from "react";
 import avavatar from "../assests/avavatar.avif";
 import './app.css'
+import { baseUrl } from "../config/config";
 
 const Groupusers = ({ close, Roomusers }) => {
   return (
@@ -14,7 +15,7 @@ const Groupusers = ({ close, Roomusers }) => {
           >
             <div>
               <img
-                src={`http://localhost:8000/images/${item.profile_pic}`}
+                src={`${baseUrl.productionUrl}/images/${item.profile_pic}`}
                 alt=""
                 height={50}
                 width={50}

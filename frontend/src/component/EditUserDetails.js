@@ -4,6 +4,7 @@ import callAPI from "../apiUtils/apiCall";
 import Divider from "./Divider";
 import Toaster from "../Toaster/Toaster";
 import avavatar from "../assests/avavatar.avif";
+import { baseUrl } from "../config/config";
 function EditUserDetails({ onClose, data }) {
   console.log("=========", onClose);
   const [imageUrl, setImageUrl] = useState("");
@@ -135,7 +136,7 @@ function EditUserDetails({ onClose, data }) {
                 <label htmlFor="profile_pic">
                   <div className="relative">
                     <img
-                      src={`http://localhost:8000/images/${userData.profile_pic}`}
+                      src={`${baseUrl.productionUrl}+/images/${userData.profile_pic}`}
                       alt="Profile"
                       className="w-24 h-24 rounded-full object-cover"
                       onError={(e) => {

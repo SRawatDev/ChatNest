@@ -12,6 +12,7 @@ import Toaster from "../Toaster/Toaster";
 import chatimg from "../assests/chatapp.webp";
 import avavatar from "../assests/avavatar.avif";
 import Accountdelete from "./Accountdelete";
+import { baseUrl } from "../config/config";
 function Sidebar() {
   const [account, setaccount] = useState(false);
   const [message, setMessage] = useState({
@@ -193,7 +194,7 @@ function Sidebar() {
                       <div style={{ textAlign: "center" }}>
                         <img
                           src={
-                            "http://localhost:8000/images/" +
+                            `${baseUrl.productionUrl}/images/` +
                             item?.user?.profile_pic
                           }
                           alt="click here"

@@ -11,6 +11,7 @@ import { logout, setSocketConnection } from "../../redux/userSlice";
 import io from "socket.io-client";
 import { setOnlineUser } from "../../redux/userSlice";
 import Avatar from "../../component/Avatar";
+import { baseUrl } from "../../config/config";
 
 function Home() {
   const location = useLocation();
@@ -43,7 +44,7 @@ function Home() {
   // socket connection
   useEffect(() => {
     try {
-      const socketconnection = io("http://localhost:8000", {
+      const socketconnection = io(`${baseUrl.productionUrl}`, {
         auth: {
           token: localStorage.getItem("UserTokken"),
         },

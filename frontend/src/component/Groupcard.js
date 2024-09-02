@@ -1,6 +1,7 @@
 import React from "react";
 import avavatar from "../assests/avavatar.avif";
 import { useSelector } from "react-redux";
+import { baseUrl } from "../config/config";
 
 const Groupcard = ({ user, onClose, onClick }) => {
   const OnlineUser = useSelector((state) => state?.user)?.onlineUser;
@@ -13,7 +14,7 @@ const Groupcard = ({ user, onClose, onClick }) => {
     >
       <div>
         <img
-          src={`http://localhost:8000/images/${user.profile_pic}`}
+          src={`${baseUrl.productionUrl}/images/${user.profile_pic}`}
           alt=""
           height={50}
           width={50}

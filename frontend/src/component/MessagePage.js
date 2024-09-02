@@ -10,6 +10,7 @@ import avavatar from "../assests/avavatar.avif";
 import "./app.css";
 import { useLocation } from 'react-router-dom';
 import Groupusers from "./Groupusers";
+import { baseUrl } from "../config/config";
 function MessagePage() {
   const [showGroupUsers, setShowGroupUsers] = useState(false);
   const location = useLocation();
@@ -141,7 +142,7 @@ function MessagePage() {
           </Link>
           <div>
             <img
-              src={`http://localhost:8000/images/${useData?.profile_pic}`}
+              src={`${baseUrl.productionUrl}/images/${useData?.profile_pic}`}
               alt=""
               height={50}
               width={50}

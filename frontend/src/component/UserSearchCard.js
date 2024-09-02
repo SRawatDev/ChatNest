@@ -3,6 +3,7 @@ import Avatar from "./Avatar";
 import { Link } from "react-router-dom";
 import avavatar from "../assests/avavatar.avif";
 import { useSelector } from "react-redux";
+import { baseUrl } from "../config/config";
 
 const UserSearchCard = ({ user, onClose }) => {
   const OnlineUser = useSelector((state) => state?.user)?.onlineUser;
@@ -15,7 +16,7 @@ const UserSearchCard = ({ user, onClose }) => {
     >
       <div>
         <img
-          src={`http://localhost:8000/images/${user.profile_pic}`}
+          src={`${baseUrl.productionUrl}/images/${user.profile_pic}`}
           alt=""
           height={50}
           width={50}
