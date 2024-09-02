@@ -4,7 +4,7 @@ const axiosInt = async (method, endpoint, data = null, { headers = {}, params = 
   try {
     const response = await axios({
       method,
-      url: baseUrl.localUrl + endpoint,
+      url: baseUrl.productionUrl + endpoint,
       data,
       headers,
       params,
