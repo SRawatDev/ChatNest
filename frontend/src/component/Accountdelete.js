@@ -23,7 +23,7 @@ const Accountdelete = ({ onClose }) => {
         true
       );
       navigate("/");
-      if (response.success) {
+      if (response.status) {
         dispatch(logout());
         localStorage.clear();
       }
