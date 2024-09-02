@@ -39,7 +39,7 @@ function MessagePage() {
     if (socketConnection) {
       socketConnection.emit("message-page", userId);
       socketConnection.on("messageUser", (data) => {
-        console.log("=====dayayayay",data)
+
 
         setUserData(data);
       });
