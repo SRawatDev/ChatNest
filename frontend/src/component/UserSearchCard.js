@@ -10,7 +10,7 @@ const UserSearchCard = ({ user, onClose }) => {
   const isOnline = OnlineUser.includes(user?._id);
   return (
     <Link
-      to={"//home" + user?._id}
+      to={"/home" + user?._id}
       onClick={onClose}
       className="flex items-center gap-3 p-2 lg:p-4 border border-transparent border-b-slate-200 hover:border hover:border-primary rounded cursor-pointer"
     >
