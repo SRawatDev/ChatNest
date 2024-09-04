@@ -10,7 +10,7 @@ function Avatar() {
           e.target.src = avavatar;
         }}
       
-        src={`${}/images/${localStorage.getItem("profileImage")}`}
+        src={`${baseUrl.productionUrl}/images/${localStorage.getItem("profileImage")}`}
         alt="Profile"
         style={{width:"50px",height:"50px",borderRadius:"50%"}}
       />
