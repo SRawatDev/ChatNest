@@ -7,3 +7,6 @@
 .scrollbar::-webkit-scrollbar-thumb{
   @apply bg-slate-200 rounded-full
 }
+body{
+  background-image: url("./assests/bgchat.jpg");
+}

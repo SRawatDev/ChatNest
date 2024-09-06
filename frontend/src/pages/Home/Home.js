@@ -12,6 +12,7 @@ import io from "socket.io-client";
 import { setOnlineUser } from "../../redux/userSlice";
 import Avatar from "../../component/Avatar";
 import { baseUrl } from "../../config/config";
+// import bgimage from "../../assests"
 
 function Home() {
   const location = useLocation();
@@ -67,8 +68,8 @@ function Home() {
 
   return (
     <>
-      <div className="grid lg:grid-cols-[400px,1fr] h-screen max-h-screen">
-        <section className={`bg-white ${!basePath && "hidden"} lg:block`}>
+      <div className="grid lg:grid-cols-[400px,1fr] h-screen max-h-screen" style={{backgroundColor:"ghostwhite"}}>
+        <section className={`bg-white ${!basePath && "hidden"} lg:block`} >
           <Sidebar />
         </section>
         <section className={`${basePath && "hidden"}`}>
@@ -81,9 +82,9 @@ function Home() {
           }`}
         >
           <div>
-            <img src={logo} width={250} alt="logo" />
+            <img src={logo} width={350} height={200} alt="logo" />
           </div>
-          <p className="text-lg mt-1 text-slate-500">
+          <p className="text-lg mt-1 text-slate-500" style={{fontSize:"25px"}}>
             Select user to send message
           </p>
         </div>

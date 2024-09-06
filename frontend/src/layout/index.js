@@ -4,7 +4,7 @@ import logo from "../assests/logo.png"
 function AuthLayout({ children }) {
   return (
     <>
-      <header className="flex justify-center items-center py-3 h-20 shadow-md bg-white">
+      <header className="flex justify-center items-center" style={{height:"50px"}}>
         <img src={logo} alt="image not found" width={180} height={60} />
       </header>
       {children}

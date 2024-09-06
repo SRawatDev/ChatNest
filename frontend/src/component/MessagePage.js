@@ -10,6 +10,7 @@ import avavatar from "../assests/avavatar.avif";
 import "./app.css";
 import { useLocation } from 'react-router-dom';
 import Groupusers from "./Groupusers";
+
 import { baseUrl } from "../config/config";
 function MessagePage() {
   const [showGroupUsers, setShowGroupUsers] = useState(false);
@@ -133,6 +134,7 @@ function MessagePage() {
         height: "100vh",
         overflowY: "auto",
       }}
+      
       className="bg-no-repeat bg-cover"
     >
       <header className="sticky top-0 h-16 bg-white flex justify-between items-center px-4">
@@ -141,6 +143,7 @@ function MessagePage() {
             <i class="fa-solid fa-angles-left text-2xl"></i>
           </Link>
           <div>
+  
             <img
               src={`${baseUrl.productionUrl}/images/${useData?.profile_pic}`}
               alt=""

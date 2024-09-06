@@ -13,6 +13,7 @@ import chatimg from "../assests/chatapp.webp";
 import avavatar from "../assests/avavatar.avif";
 import Accountdelete from "./Accountdelete";
 import { baseUrl } from "../config/config";
+import bgimage from "../assests/chatapplication.jpg";
 function Sidebar() {
   const [account, setaccount] = useState(false);
   const [message, setMessage] = useState({
@@ -95,7 +96,7 @@ function Sidebar() {
         key={message.key}
       />
       <div className="w-full h-full flex">
-        <div className="bg-slate-100 w-12 h-full rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-between">
+        <div className=" w-12 h-full rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-between" style={{backgroundColor:"white"}}>
           <div>
             <NavLink
               className={({ isActive }) =>
@@ -103,20 +104,23 @@ function Sidebar() {
                   isActive && "bg-slate-200"
                 }`
               }
-              title="chat"
+              title="delete"
             >
-              <i className="fa-solid fa-trash text-2xl" onClick={()=>setaccount(true)}></i>
+              <i
+                className="fa-solid fa-trash text-2xl"
+                onClick={() => setaccount(true)}
+              ></i>
             </NavLink>
             <div
               className="w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-300 rounded"
-              title="user"
+              title="add user"
               onClick={() => setOpenSearchUser(true)}
             >
               <i className="fa-solid fa-user-plus text-2xl"></i>
             </div>
             <div
               className="w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-300 rounded"
-              title="user"
+              title="group"
               onClick={() => setgroup(true)}
             >
               <i className="fa-solid fa-users-line text-2xl"></i>
@@ -148,12 +152,18 @@ function Sidebar() {
         {openSearchUser && (
           <SearchUser onClose={() => setOpenSearchUser(false)} />
         )}
-     {group && <GroupChat onClose={() => setgroup(false)} />}
+        {group && <GroupChat onClose={() => setgroup(false)} />}
 
         {logouttoglle && <Logout onClose={() => setlogouttoglle(false)} />}
         {account && <Accountdelete onClose={() => setaccount(false)} />}
 
-        <div className="flex-1 p-4">
+        <div
+          className="flex-1 p-4"
+          style={{
+            backgroundImage: `url(${bgimage})`,
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3)",
+          }}
+        >
           <div className="h-16 flex items-center">
             <h2 className="text-xl font-bold p-4 text-slate-800">Message</h2>
           </div>
@@ -172,23 +182,27 @@ function Sidebar() {
                         padding: "15px",
                         height: "70px",
                         borderRadius: "10px",
-                        background: `url(${chatimg}) no-repeat center center/cover`, // Example background image
+                        backgroundColor: "transparent", // Keep the background transparent
+                        backdropFilter: "blur(8px)", // Apply blur effect
                         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
-                        transition:
-                          "background-color 0.3s ease, transform 0.3s ease",
+                        transition: "transform 0.3s ease",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor =
-                          "rgba(0, 0, 0, 0.7)";
-                        e.currentTarget.style.transform = "scale(1.02)";
+                        e.currentTarget.style.transform = "scale(1.02)"; // Only scale on hover
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = "";
                         e.currentTarget.style.transform = "scale(1)";
                       }}
                     >
-                      <div></div>
-                      <div style={{ textAlign: "center", color: "white",margin:"auto" }}>
+                      <div
+                        style={{
+                          
+                          fontFamily:"math",
+                          textAlign: "center",
+                          color: "white",
+                          margin: "auto",
+                        }}
+                      >
                         <p>{item?.messages[0]?.text}</p>
                       </div>
                       <div style={{ textAlign: "center" }}>
@@ -219,7 +233,7 @@ function Sidebar() {
                         />
                         <p
                           style={{
-                            fontFamily: "Arial, sans-serif",
+                            fontFamily:"math",
                             margin: "0 15px 0 0",
                             fontSize: "14px",
                             margin: "auto",
@@ -227,7 +241,9 @@ function Sidebar() {
                             color: "#fff",
                             textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
                           }}
-                        >{item?.user?.name}</p>
+                        >
+                          {item?.user?.name}
+                        </p>
                       </div>
                     </div>
                   </Link>
@@ -247,25 +263,24 @@ function Sidebar() {
                       padding: "15px",
                       height: "70px",
                       borderRadius: "10px",
-                      background: `url(${chatimg}) no-repeat center center/cover`, // Example background image
+
                       boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
                       transition:
                         "background-color 0.3s ease, transform 0.3s ease",
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        "rgba(0, 0, 0, 0.7)";
+                    
                       e.currentTarget.style.transform = "scale(1.02)";
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = "";
+        
                       e.currentTarget.style.transform = "scale(1)";
                     }}
                   >
                     <div>
                       <p
                         style={{
-                          fontFamily: "Arial, sans-serif",
+                          fontFamily:"math",
                           margin: "0 15px 0 0",
                           fontSize: "20px",
                           fontWeight: "700",
@@ -277,7 +292,7 @@ function Sidebar() {
                       </p>
                       <p
                         style={{
-                          fontFamily: "Arial, sans-serif",
+                          fontFamily:"math",
                           margin: "5px 15px 0 0",
                           fontSize: "16px",
                           fontWeight: "500",
@@ -313,7 +328,7 @@ function Sidebar() {
                       />
                       <p
                         style={{
-                          fontFamily: "Arial, sans-serif",
+                          fontFamily:"math",
                           margin: "0 15px 0 0",
                           fontSize: "14px",
                           margin: "auto",

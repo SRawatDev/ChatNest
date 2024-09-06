@@ -93,17 +93,14 @@ function EditUserDetails({ onClose, data }) {
         message: response.message,
         key: Date.now(),
       });
-      
 
       if (response.status) {
         localStorage.setItem("profileImage", response?.Data?.profile_pic);
-       
       }
       await fetchData();
-      setTimeout(()=>{
+      setTimeout(() => {
         onClose();
-      },1000)
-      
+      }, 1000);
     } catch (error) {
       console.log("errr", error);
 
@@ -136,7 +133,11 @@ function EditUserDetails({ onClose, data }) {
                 <label htmlFor="profile_pic">
                   <div className="relative">
                     <img
-                      src={`${baseUrl.productionUrl}/images/${userData.profile_pic}`}
+                      src={
+                        imageUrl
+                          ? `${baseUrl.productionUrl}/${imageUrl}`
+                          : `${baseUrl.productionUrl}/images/${userData.profile_pic}`
+                      }
                       alt="Profile"
                       className="w-24 h-24 rounded-full object-cover"
                       onError={(e) => {
@@ -144,9 +145,6 @@ function EditUserDetails({ onClose, data }) {
                         e.target.src = avavatar;
                       }}
                     />
-                    <button className="absolute bottom-0 right-0 bg-gray-800 text-white text-xs rounded-full p-1">
-                      Change
-                    </button>
                   </div>
                 </label>
                 <input
