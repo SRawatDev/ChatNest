@@ -5,14 +5,13 @@ import callAPI from "../../apiUtils/apiCall";
 import { Backendapi } from "../../apis/api";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../../component/Sidebar";
-import MessagePage from "../../component/MessagePage";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, setSocketConnection } from "../../redux/userSlice";
 import io from "socket.io-client";
 import { setOnlineUser } from "../../redux/userSlice";
 import Avatar from "../../component/Avatar";
 import { baseUrl } from "../../config/config";
-// import bgimage from "../../assests"
+
 
 function Home() {
   const location = useLocation();
@@ -56,20 +55,20 @@ function Home() {
         dispatch(setOnlineUser(data));
       });
       return () => {
-        socketconnection.disconnect(); 
+        socketconnection.disconnect();
       };
-      
     } catch (error) {
       console.log(error);
     }
-  
   }, []);
-
 
   return (
     <>
-      <div className="grid lg:grid-cols-[400px,1fr] h-screen max-h-screen" style={{backgroundColor:"ghostwhite"}}>
-        <section className={`bg-white ${!basePath && "hidden"} lg:block`} >
+      <div
+        className="grid lg:grid-cols-[400px,1fr] h-screen max-h-screen"
+        style={{ backgroundColor: "ghostwhite" }}
+      >
+        <section className={`bg-white ${!basePath && "hidden"} lg:block`}>
           <Sidebar />
         </section>
         <section className={`${basePath && "hidden"}`}>
@@ -84,7 +83,10 @@ function Home() {
           <div>
             <img src={logo} width={350} height={200} alt="logo" />
           </div>
-          <p className="text-lg mt-1 text-slate-500" style={{fontSize:"25px"}}>
+          <p
+            className="text-lg mt-1 text-slate-500"
+            style={{ fontSize: "25px" }}
+          >
             Select user to send message
           </p>
         </div>

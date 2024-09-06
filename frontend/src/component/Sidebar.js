@@ -96,7 +96,14 @@ function Sidebar() {
         key={message.key}
       />
       <div className="w-full h-full flex">
-        <div className=" w-12 h-full rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-between" style={{backgroundColor:"white"}}>
+        <div className=" w-12 h-full rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-between" style={{backgroundColor:"white",
+              backgroundColor: "#87d2f1",
+              marginLeft: "5px",
+              height: "98%",
+              borderRadius: "10px",
+              marginTop: "5px",
+              marginRight: "10px"
+        }}>
           <div>
             <NavLink
               className={({ isActive }) =>
@@ -162,6 +169,11 @@ function Sidebar() {
           style={{
             backgroundImage: `url(${bgimage})`,
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3)",
+            height:"98%",
+            marginTop:"5px",
+            borderRadius:"10px",
+            overflowY:"auto",
+            scrollbarWidth:"none"
           }}
         >
           <div className="h-16 flex items-center">

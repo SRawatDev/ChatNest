@@ -6,6 +6,7 @@ import Toaster from "../Toaster/Toaster";
 import Chip from "@mui/material/Chip"; // Import Chip from Material UI
 import Groupcard from "./Groupcard";
 import uploadFile from "../helper/uploadFile";
+import { getroomInfo } from "./Sidebar";
 const GroupChat = ({ onClose }) => {
   
   const [loading, setLoading] = useState(false);
@@ -89,6 +90,7 @@ const GroupChat = ({ onClose }) => {
         true
       );
       if (response.status) {
+      
         setTimeout(() => {
           setMessage({
             status: response.status,
