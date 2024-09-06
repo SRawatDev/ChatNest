@@ -20,6 +20,7 @@ const Groupcard = ({ user, onClose, onClick }) => {
           width={50}
           style={{
             borderRadius: "50%",
+            height:"50px",
             border: isOnline ? "4px solid green" : "4px solid red", // Conditional border color
           }}
           onError={(e) => {
