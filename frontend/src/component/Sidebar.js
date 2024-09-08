@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import EditUserDetails from "./EditUserDetails";
 import SearchUser from "./SearchUser";
 import Avatar from "./Avatar";
+import gemni from "../assests/gemni.jpg";
 import Logout from "./Logout";
 import moment from "moment";
 import GroupChat from "./Groupchat";
@@ -97,14 +98,18 @@ function Sidebar() {
         key={message.key}
       />
       <div className="w-full h-full flex">
-        <div className=" w-12 h-full rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-between" style={{backgroundColor:"white",
-              backgroundColor: "#87d2f1",
-              marginLeft: "5px",
-              height: "98%",
-              borderRadius: "10px",
-              marginTop: "5px",
-              marginRight: "10px"
-        }}>
+        <div
+          className=" w-12 h-full rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-between"
+          style={{
+            backgroundColor: "white",
+            backgroundColor: "#87d2f1",
+            marginLeft: "5px",
+            height: "98%",
+            borderRadius: "10px",
+            marginTop: "5px",
+            marginRight: "10px",
+          }}
+        >
           <div>
             <NavLink
               className={({ isActive }) =>
@@ -170,16 +175,76 @@ function Sidebar() {
           style={{
             backgroundImage: `url(${bgimage})`,
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3)",
-            height:"98%",
-            marginTop:"5px",
-            borderRadius:"10px",
-            overflowY:"auto",
-            scrollbarWidth:"none"
+            height: "98%",
+            marginTop: "5px",
+            borderRadius: "10px",
+            overflowY: "auto",
+            scrollbarWidth: "none",
           }}
         >
           <div className="h-16 flex items-center">
             <h2 className="text-xl font-bold p-4 text-slate-800">Message</h2>
           </div>
+
+          <Link to={"/home/gemniai"}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "left",
+                margin: "10px 0",
+                flexDirection: "row-reverse",
+                padding: "15px",
+                height: "70px",
+                borderRadius: "10px",
+                backgroundColor: "transparent", // Keep the background transparent
+                backdropFilter: "blur(8px)", // Apply blur effect
+                boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+                transition: "transform 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.02)"; // Only scale on hover
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: "math",
+                  textAlign: "center",
+                  color: "white",
+                  margin: "auto",
+                }}
+              >
+                Chat with Gemni ai
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <img
+                  src={gemni}
+                  alt="click here"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = avavatar;
+                  }}
+                  style={{
+                    height: "50px",
+                    width: "50px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3)",
+                    transition: "transform 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "scale(1.1)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "scale(1)";
+                  }}
+                />
+              </div>
+            </div>
+          </Link>
           <div className=" p-[0.5px]">
             {userconversation?.map((item, index) => {
               return (
@@ -207,31 +272,33 @@ function Sidebar() {
                         e.currentTarget.style.transform = "scale(1)";
                       }}
                     >
-                        <div>
-                    
-                    <p
-                      style={{
-                        fontFamily:"math",
-                        margin: "5px 15px 0 0",
-                        fontSize: "16px",
-                        fontWeight: "500",
-                        color: "#fff",
-                        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
-                      }}
-                    >
-                       {moment(item.messages[0]?.createdAt).format("hh:mm")}
-                    </p>
-                  </div>
+                      <div>
+                        <p
+                          style={{
+                            fontFamily: "math",
+                            margin: "5px 15px 0 0",
+                            fontSize: "16px",
+                            fontWeight: "500",
+                            color: "#fff",
+                            textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
+                          }}
+                        >
+                          {moment(item.messages[0]?.createdAt).format("hh:mm")}
+                        </p>
+                      </div>
                       <div
                         style={{
-                          
-                          fontFamily:"math",
+                          fontFamily: "math",
                           textAlign: "center",
                           color: "white",
                           margin: "auto",
                         }}
                       >
-                       <p>{item?.messages[0]?.text?item?.messages[0]?.text:"no message yet"}</p>
+                        <p>
+                          {item?.messages[0]?.text
+                            ? item?.messages[0]?.text
+                            : "no message yet"}
+                        </p>
                       </div>
                       <div style={{ textAlign: "center" }}>
                         <img
@@ -261,7 +328,7 @@ function Sidebar() {
                         />
                         <p
                           style={{
-                            fontFamily:"math",
+                            fontFamily: "math",
                             margin: "0 15px 0 0",
                             fontSize: "14px",
                             margin: "auto",
@@ -278,7 +345,16 @@ function Sidebar() {
                 </Link>
               );
             })}
-            <h2 style={{color:"white" ,textAlign:"center",fontSize:"22px",fontFamily:"math"}}>Groups</h2>
+            <h2
+              style={{
+                color: "white",
+                textAlign: "center",
+                fontSize: "22px",
+                fontFamily: "math",
+              }}
+            >
+              Groups
+            </h2>
             {roomdata?.map((item, index) => {
               return (
                 <Link to={"/home/groupchat/" + item?._id} key={index}>
@@ -298,19 +374,16 @@ function Sidebar() {
                         "background-color 0.3s ease, transform 0.3s ease",
                     }}
                     onMouseEnter={(e) => {
-                    
                       e.currentTarget.style.transform = "scale(1.02)";
                     }}
                     onMouseLeave={(e) => {
-        
                       e.currentTarget.style.transform = "scale(1)";
                     }}
                   >
                     <div>
-                    
                       <p
                         style={{
-                          fontFamily:"math",
+                          fontFamily: "math",
                           margin: "5px 15px 0 0",
                           fontSize: "16px",
                           fontWeight: "500",
@@ -318,21 +391,23 @@ function Sidebar() {
                           textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
                         }}
                       >
-                         {moment(item.messages[0]?.createdAt).format("hh:mm")}
+                        {moment(item.messages[0]?.createdAt).format("hh:mm")}
                       </p>
                     </div>
                     <div
-                        style={{
-                          
-                          fontFamily:"math",
-                          textAlign: "center",
-                          color: "white",
-                          margin: "auto",
-                        }}
-                      >
-                        <p>{item?.messages[0]?.text?item?.messages[0]?.text:"no message yet"}</p>
-
-                      </div>
+                      style={{
+                        fontFamily: "math",
+                        textAlign: "center",
+                        color: "white",
+                        margin: "auto",
+                      }}
+                    >
+                      <p>
+                        {item?.messages[0]?.text
+                          ? item?.messages[0]?.text
+                          : "no message yet"}
+                      </p>
+                    </div>
                     <div>
                       <img
                         src={item?.image}
@@ -359,7 +434,7 @@ function Sidebar() {
 
                       <p
                         style={{
-                          fontFamily:"math",
+                          fontFamily: "math",
                           margin: "0 15px 0 0",
                           fontSize: "14px",
                           margin: "auto",
@@ -368,7 +443,7 @@ function Sidebar() {
                           textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
                         }}
                       >
-                          {item?.name}
+                        {item?.name}
                       </p>
                     </div>
                   </div>

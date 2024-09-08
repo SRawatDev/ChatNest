@@ -127,7 +127,7 @@ const Groupchats = () => {
     <div
       style={{
         backgroundImage: `url(${backgroundImage})`,
-        height: "100vh",
+        height: "90vh",
         overflowY: "auto",
       }}
       className="bg-no-repeat bg-cover"

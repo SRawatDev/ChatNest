@@ -131,7 +131,7 @@ function MessagePage() {
     <div
       style={{
         backgroundImage: `url(${backgroundImage})`,
-        height: "100vh",
+        height: "90vh",
         overflowY: "auto",
       }}
       

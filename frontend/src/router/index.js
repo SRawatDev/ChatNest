@@ -10,7 +10,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import TokenProtectedRoute from "./TokenProtectedRoute";
 import GroupChat from "../component/Groupchat";
 import Groupchats from "../component/Groupchats";
-
+import Gemniai from "../component/Gemniai";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -63,6 +63,14 @@ const router = createBrowserRouter([
             element: (
               <TokenProtectedRoute>
                 <Groupchats />
+              </TokenProtectedRoute>
+            ),
+          },
+          {
+            path: "gemniai",
+            element: (
+              <TokenProtectedRoute>
+                <Gemniai />
               </TokenProtectedRoute>
             ),
           },
