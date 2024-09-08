@@ -53,7 +53,7 @@ const Accountdelete = ({ onClose }) => {
             className="font-semibold text-center mb-6"
             style={{ fontSize: "x-large" }}
           >
-            Are you sure You want to logout
+            Are you sure You want to delete your account
           </h1>
           <div className="flex justify-center gap-2">
             <button
