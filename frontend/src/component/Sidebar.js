@@ -5,6 +5,7 @@ import EditUserDetails from "./EditUserDetails";
 import SearchUser from "./SearchUser";
 import Avatar from "./Avatar";
 import Logout from "./Logout";
+import moment from "moment";
 import GroupChat from "./Groupchat";
 import callAPI from "../apiUtils/apiCall";
 import { Backendapi } from "../apis/api";
@@ -206,6 +207,21 @@ function Sidebar() {
                         e.currentTarget.style.transform = "scale(1)";
                       }}
                     >
+                        <div>
+                    
+                    <p
+                      style={{
+                        fontFamily:"math",
+                        margin: "5px 15px 0 0",
+                        fontSize: "16px",
+                        fontWeight: "500",
+                        color: "#fff",
+                        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
+                      }}
+                    >
+                       {moment(item.messages[0]?.createdAt).format("hh:mm")}
+                    </p>
+                  </div>
                       <div
                         style={{
                           
@@ -215,7 +231,7 @@ function Sidebar() {
                           margin: "auto",
                         }}
                       >
-                        <p>{item?.messages[0]?.text}</p>
+                       <p>{item?.messages[0]?.text?item?.messages[0]?.text:"no message yet"}</p>
                       </div>
                       <div style={{ textAlign: "center" }}>
                         <img
@@ -262,6 +278,7 @@ function Sidebar() {
                 </Link>
               );
             })}
+            <h2 style={{color:"white" ,textAlign:"center",fontSize:"22px",fontFamily:"math"}}>Groups</h2>
             {roomdata?.map((item, index) => {
               return (
                 <Link to={"/home/groupchat/" + item?._id} key={index}>
@@ -290,18 +307,7 @@ function Sidebar() {
                     }}
                   >
                     <div>
-                      <p
-                        style={{
-                          fontFamily:"math",
-                          margin: "0 15px 0 0",
-                          fontSize: "20px",
-                          fontWeight: "700",
-                          color: "#fff",
-                          textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
-                        }}
-                      >
-                        {item?.name}
-                      </p>
+                    
                       <p
                         style={{
                           fontFamily:"math",
@@ -312,9 +318,21 @@ function Sidebar() {
                           textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
                         }}
                       >
-                        Created {new Date(item?.updatedAt).toLocaleDateString()}
+                         {moment(item.messages[0]?.createdAt).format("hh:mm")}
                       </p>
                     </div>
+                    <div
+                        style={{
+                          
+                          fontFamily:"math",
+                          textAlign: "center",
+                          color: "white",
+                          margin: "auto",
+                        }}
+                      >
+                        <p>{item?.messages[0]?.text?item?.messages[0]?.text:"no message yet"}</p>
+
+                      </div>
                     <div>
                       <img
                         src={item?.image}
@@ -338,6 +356,7 @@ function Sidebar() {
                           e.currentTarget.style.transform = "scale(1)";
                         }}
                       />
+
                       <p
                         style={{
                           fontFamily:"math",
@@ -349,7 +368,7 @@ function Sidebar() {
                           textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
                         }}
                       >
-                        Group
+                          {item?.name}
                       </p>
                     </div>
                   </div>

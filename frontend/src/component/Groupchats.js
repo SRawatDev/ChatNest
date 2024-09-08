@@ -165,7 +165,7 @@ const Groupchats = () => {
         </div>
       </header>
       {/* show all message */}
-      <section className="h-[calc(100vh-128)] overflow-x-hidden overflow-y-scroll scrollbar">
+      <section className="h-[calc(100vh-128)] overflow-x-hidden overflow-y-scroll scrollbar" style={{height:"88%"}}>
         {groupMessage.imageUrl && (
           <div className="w-full h-full sticky bottom-0 bg-slate-700 bg-opacity-30 flex justify-center items-center rounded overflow-hidden">
             <div

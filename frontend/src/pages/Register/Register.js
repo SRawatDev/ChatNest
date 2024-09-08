@@ -4,8 +4,8 @@ import callAPI from "../../apiUtils/apiCall";
 import { useNavigate } from "react-router-dom";
 import Toaster from "../../Toaster/Toaster";
 import { Link } from "react-router-dom";
-import bg from "../../assests/bgchat.jpg"
-import "../../App.css"
+import bg from "../../assests/bgchat.jpg";
+import "../../App.css";
 
 function Register() {
   const [data, setData] = useState({
@@ -100,13 +100,13 @@ function Register() {
   };
 
   return (
-    <div >
+    <div>
       <Toaster
         message={message.message}
         status={message.status}
         key={message.key}
       />
-      <div className="mt-5 flex justify-center"  >
+      <div className="mt-5 flex justify-center">
         <div className="bg-white w-full max-w-md mx-2 rounded-lg shadow-lg p-6">
           <h3 className="text-xl font-semibold mb-4">
             Welcome to the Chat App
