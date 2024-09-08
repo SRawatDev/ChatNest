@@ -105,12 +105,14 @@ const Gemniai = () => {
                   <span
                     style={{
                       backgroundColor: "#00FF00",
+                      width:"70%",
                       color: "white",
                       paddingRight: "10px",
                       borderBottomRightRadius: "20px",
                       padding: "8px",
                       display: "inline-block",
                       textAlign: "center",
+                      marginLeft:"5px"
                     }}
                   >
                     {item.reply}
