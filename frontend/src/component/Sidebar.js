@@ -104,9 +104,9 @@ function Sidebar() {
             backgroundColor: "white",
             backgroundColor: "#87d2f1",
             marginLeft: "5px",
-            height: "80%",
+            height: "90%",
             borderRadius: "10px",
-            marginTop: "5px",
+            marginTop: "12px",
             marginRight: "10px",
           }}
         >
@@ -175,8 +175,8 @@ function Sidebar() {
           style={{
             backgroundImage: `url(${bgimage})`,
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3)",
-            height: "80%",
-            marginTop: "5px",
+            height: "90%",
+            marginTop: "12px",
             borderRadius: "10px",
             overflowY: "auto",
             scrollbarWidth: "none",
