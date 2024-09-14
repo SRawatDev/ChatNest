@@ -231,7 +231,7 @@ function MessagePage() {
           {allmessage?.map((msg, index) => {
             return (
               <div  style={{
-                backgroundColor: "#00FF00",
+                backgroundColor: "#87d2f1",
                 margin: "3px",
                 color: "white",
                 borderRadius: "20px",
@@ -331,7 +331,7 @@ function MessagePage() {
             name="text"
             onChange={handleOnChange}
           />
-          <button className="mt-3 text-primary hover:text-secondary responseive">
+          <button className="mt-3  responseive">
             send
           </button>
         </form>

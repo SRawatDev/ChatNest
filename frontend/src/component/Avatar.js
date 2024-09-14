@@ -12,7 +12,7 @@ function Avatar() {
       
         src={`${baseUrl.productionUrl}/images/${localStorage.getItem("profileImage")}`}
         alt="Profile"
-        style={{width:"50px",height:"50px",borderRadius:"50%"}}
+        style={{width:"40px",height:"40px",borderRadius:"50%"}}
       />
     </div>
   );

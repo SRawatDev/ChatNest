@@ -4,6 +4,7 @@ import avavatar from "../assests/avavatar.avif";
 import gemni from "../assests/gemni.jpg";
 import backgroundImage from "../assests/wallapaper.jpeg";
 import axios from "axios";
+import Avatar from "./Avatar";
 
 const Gemniai = () => {
   const [gemniai, setGemniai] = useState([]);
@@ -53,9 +54,8 @@ const Gemniai = () => {
             <img
               src={gemni}
               alt=""
-              height={80}
-              width={90}
-              style={{ borderRadius: "10px" }}
+              
+              style={{ borderRadius: "50%",height:"50px",width:"50px" }}
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.src = avavatar;
@@ -87,31 +87,38 @@ const Gemniai = () => {
                 style={{ display: "flex", flexDirection: "column", gap: "6px" }}
               >
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Avatar />
                   <span
                     style={{
-                      backgroundColor: "#00FF00",
-
+                      backgroundColor: "#87d2f1",
                       color: "white",
                       borderBottomRightRadius: "20px",
                       padding: "8px",
                       display: "inline-block",
-                      textAlign: "center",
                     }}
                   >
                     {item.message}
                   </span>
                 </div>
                 <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                <img
+              src={gemni}
+              alt=""
+              
+              style={{ borderRadius: "50%",height:"40px",width:"40px" }}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = avavatar;
+              }}
+            />
                   <span
                     style={{
-                      backgroundColor: "#00FF00",
-                      width:"70%",
+                      backgroundColor: "#87d2f1",
                       color: "white",
                       paddingRight: "10px",
                       borderBottomRightRadius: "20px",
                       padding: "8px",
                       display: "inline-block",
-                      textAlign: "center",
                       marginLeft:"5px"
                     }}
                   >
@@ -136,7 +143,7 @@ const Gemniai = () => {
             value={message}
             onChange={handleOnChange}
           />
-          <button className="mt-3 text-primary hover:text-secondary responseive">
+          <button className="mt-3  responseive">
             send
           </button>
         </form>
